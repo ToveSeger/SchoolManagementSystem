@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dc085161a3b44c72b1712a7af445edad" Name="Diagram1" ZoomLevel="60">
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.Course" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.Enrollment" Width="1.5" PointX="4" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.C__MigrationHistory" Width="1.5" PointX="6.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.AspNetRoles" Width="1.5" PointX="3.375" PointY="5.5" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.AspNetUserClaims" Width="1.5" PointX="7.875" PointY="4" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.AspNetUserLogins" Width="1.5" PointX="7.875" PointY="6.75" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.AspNetUsers" Width="1.5" PointX="5.625" PointY="4.25" />
+        <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="SchoolManagementSystemModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.Participant" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
