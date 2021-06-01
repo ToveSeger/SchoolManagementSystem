@@ -16,6 +16,8 @@
         <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="SchoolManagementSystemModel.AspNetUserRoles" />
         <EntityTypeShape EntityType="SchoolManagementSystemModel.Participant" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_Enrollment_dbo_Course_CourseID" />
+        <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_Enrollment_dbo_Participant_ParticipantID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

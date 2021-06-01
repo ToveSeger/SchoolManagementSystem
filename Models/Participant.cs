@@ -14,11 +14,20 @@ namespace SchoolManagementSystem.Models
     
     public partial class Participant
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Participant()
+        {
+            this.Enrollment = new HashSet<Enrollment>();
+        }
+    
         public int ParticipantId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public System.DateTime EnrollmentDate { get; set; }
         public string MiddleName { get; set; }
         public System.DateTime DateOfBirth { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Enrollment> Enrollment { get; set; }
     }
 }
