@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dc085161a3b44c72b1712a7af445edad" Name="Diagram1" ZoomLevel="60">
+      <Diagram DiagramId="dc085161a3b44c72b1712a7af445edad" Name="Diagram1" ZoomLevel="56">
         <EntityTypeShape EntityType="SchoolManagementSystemModel.Course" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SchoolManagementSystemModel.Enrollment" Width="1.5" PointX="4" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.Enrollment" Width="1.5" PointX="8.375" PointY="11.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SchoolManagementSystemModel.C__MigrationHistory" Width="1.5" PointX="6.375" PointY="0.75" />
         <EntityTypeShape EntityType="SchoolManagementSystemModel.AspNetRoles" Width="1.5" PointX="3.375" PointY="5.5" />
         <EntityTypeShape EntityType="SchoolManagementSystemModel.AspNetUserClaims" Width="1.5" PointX="7.875" PointY="4" />
@@ -18,6 +18,8 @@
         <EntityTypeShape EntityType="SchoolManagementSystemModel.Participant" Width="1.5" PointX="0.75" PointY="0.75" />
         <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_Enrollment_dbo_Course_CourseID" />
         <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_Enrollment_dbo_Participant_ParticipantID" />
+        <EntityTypeShape EntityType="SchoolManagementSystemModel.Lecturer" Width="1.5" PointX="0.75" PointY="6.875" />
+        <AssociationConnector Association="SchoolManagementSystemModel.FK_dbo_Enrollment_dbo_Lecturer_LecturerID1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

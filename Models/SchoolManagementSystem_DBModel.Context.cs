@@ -33,5 +33,6 @@ namespace SchoolManagementSystem.Models
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Participant> Participant { get; set; }
+        public virtual DbSet<Lecturer> Lecturer { get; set; }
     }
 }

@@ -18,28 +18,34 @@
             @Html.DisplayNameFor(model => model.CourseId)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Participant.LastName)
+            @Html.DisplayNameFor(model => model.Participant.ParticipantId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lecturer.Id)
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Grade)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CourseId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Participant.LastName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EnrollmentId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EnrollmentId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EnrollmentId })
-        </td>
-    </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Grade)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CourseId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Participant.ParticipantId)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Lecturer.Id)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.EnrollmentId }) |
+        @Html.ActionLink("Details", "Details", new { id = item.EnrollmentId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.EnrollmentId })
+    </td>
+</tr>
 }
 
 </table>

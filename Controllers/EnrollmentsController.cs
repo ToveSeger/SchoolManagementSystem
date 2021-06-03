@@ -15,11 +15,11 @@ namespace SchoolManagementSystem.Controllers
         private SchoolManagementSystemEntities db = new SchoolManagementSystemEntities();
 
         // GET: Enrollments
-        //public ActionResult Index()
-        //{
-        //    //var enrollment = db.Enrollment.Include(e => e.Participant);
-        //    //return View(enrollment.ToList());
-        //}
+        public ActionResult Index()
+        {
+            var enrollment = db.Enrollment.Include(e=>e.Course).Include(e => e.Participant).Include(e=>e.Lecturer);
+            return View(enrollment.ToList());
+        }
 
         // GET: Enrollments/Details/5
         public ActionResult Details(int? id)
@@ -39,7 +39,9 @@ namespace SchoolManagementSystem.Controllers
         // GET: Enrollments/Create
         public ActionResult Create()
         {
-            ViewBag.ParticipantId = new SelectList(db.Participant, "ParticipantId", "LastName");
+            ViewBag.ParticipantID = new SelectList(db.Participant, "ParticipantID");
+            ViewBag.CourseID = new SelectList(db.Course, "CourseID");
+            ViewBag.LecturerID = new SelectList(db.Lecturer, "Id", "First_Name");
             return View();
         }
 
@@ -57,7 +59,9 @@ namespace SchoolManagementSystem.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ParticipantId = new SelectList(db.Participant, "ParticipantId", "LastName", enrollment.ParticipantId);
+            ViewBag.ParticipantId = new SelectList(db.Participant, "ParticipantId", null, enrollment.ParticipantId);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseID", null, enrollment.CourseId);
+            //ViewBag.LecturerId = new SelectList(db.Lecturer, "Id", "First_Name", enrollment.LecturerId);
             return View(enrollment);
         }
 
@@ -73,7 +77,9 @@ namespace SchoolManagementSystem.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.ParticipantId = new SelectList(db.Participant, "ParticipantId", "LastName", enrollment.ParticipantId);
+            ViewBag.ParticipantId = new SelectList(db.Participant, "ParticipantId", null, enrollment.ParticipantId);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseID",null , enrollment.CourseId);
+            ViewBag.LecturerId = new SelectList(db.Lecturer, "Id", "First_Name", enrollment.LecturerId);
             return View(enrollment);
         }
 
@@ -91,6 +97,8 @@ namespace SchoolManagementSystem.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ParticipantId = new SelectList(db.Participant, "ParticipantId", "LastName", enrollment.ParticipantId);
+            ViewBag.CourseId = new SelectList(db.Course, "CourseID", "LastName", enrollment.CourseId);
+            ViewBag.LecturerId = new SelectList(db.Lecturer, "Id", "First_Name", enrollment.LecturerId);
             return View(enrollment);
         }
 
@@ -119,6 +127,29 @@ namespace SchoolManagementSystem.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public JsonResult GetParticipants(string term)
+        {
+            var students = db.Participant.Select(p => new
+            {
+                Name = p.FirstName + " " + p.LastName,
+                Id = p.ParticipantId
+            }).Where(p=>p.Name.Contains(term));
+
+            return Json(students, JsonRequestBehavior.AllowGet);
+        }
+
+        //[HttpPost]
+        //public JsonResult GetCourses(string term)
+        //{
+        //    var courses = db.Course.Select(c => new
+        //    {
+        //        Name = c.Title 
+        //    }).Where(p => p.Name.Contains(term));
+
+        //    return Json(courses, JsonRequestBehavior.AllowGet);
+        //}
 
         protected override void Dispose(bool disposing)
         {
