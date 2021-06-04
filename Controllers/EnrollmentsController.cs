@@ -40,9 +40,9 @@ namespace SchoolManagementSystem.Controllers
         // GET: Enrollments/Create
         public ActionResult Create()
         {
-            ViewBag.ParticipantID = new SelectList(db.Participant, "ParticipantID");
-            ViewBag.CourseID = new SelectList(db.Course, "CourseID");
-            ViewBag.LecturerID = new SelectList(db.Lecturer, "Id", "First_Name");
+            ViewBag.CourseID = new SelectList(db.Course, "CourseID", "Title");
+            ViewBag.ParticipantID = new SelectList(db.Participant,"ParticipantID", "LastName");
+            //ViewBag.LecturerID = new SelectList(db.Lecturer, "Id", "First_Name");
             return View();
         }
 
@@ -51,12 +51,12 @@ namespace SchoolManagementSystem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EnrollmentId,Grade,CourseId,ParticipantId")] Enrollment enrollment)
+        public async Task<ActionResult> Create([Bind(Include = "EnrollmentId,Grade,CourseId,ParticipantId")] Enrollment enrollment)
         {
             if (ModelState.IsValid)
             {
                 db.Enrollment.Add(enrollment);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 

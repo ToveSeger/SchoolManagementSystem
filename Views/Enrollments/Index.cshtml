@@ -15,13 +15,13 @@
             @Html.DisplayNameFor(model => model.Grade)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CourseId)
+            @Html.DisplayNameFor(model => model.Course.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Participant.ParticipantId)
+            @Html.DisplayNameFor(model => model.Participant.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lecturer.Id)
+            @Html.DisplayNameFor(model => model.Participant.FirstName)
         </th>
         <th></th>
     </tr>
@@ -32,13 +32,13 @@
         @Html.DisplayFor(modelItem => item.Grade)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.CourseId)
+        @Html.DisplayFor(modelItem => item.Course.Title)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Participant.ParticipantId)
+        @Html.DisplayFor(modelItem => item.Participant.LastName)
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Lecturer.Id)
+        @Html.DisplayFor(modelItem => item.Participant.FirstName)
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.EnrollmentId }) |

@@ -17,8 +17,9 @@
                     },
                     success: function (data) {
                         console.log(data);
-                        response($.map(data, function (participant) {
-                            return { label: participant.Name, value: participant.Name, id: participant.Id };
+                        $("#Participant_FirstName").val("");
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name, id: item.Id };
                         }))
                     }
                 });
@@ -30,44 +31,37 @@
             }
         });
     });
+
+    function Added(res) {
+        if (res.IsSuccess) {
+            $(function () {
+                $("#failed").fadeOut('fast');
+                $("#success").fadeIn('fast');
+            })
+        }
+        else {
+            Failed(res);
+        }
+    }
+
+    function Failed(res) {     
+            $(function () {
+                $("#failed").fadeIn('fast');
+                $("#failed").fadeOut('fast');
+            })       
+    }
 </script>
 
-    @*<script>
-        $(function () {
-            $("#Course_Id").autocomplete({
-                source: function (request, response) {
-                    $.ajax({
-                        url: "/Enrollments/GetCourses",
-                        dataType: "json",
-                        type: "POST",
-                        data: {
-                            term: request.term
-                        },
-                        success: function (data) {
-                            console.log(data);
-                            response($.map(data, function (item) {
-                                return { label: item.Name, value: item.Name, id: item.id };
-                            }))
-                        }
-                    });
-                },
-                minLength: 2,
-                select: function (event, query) {
-                    console.log(query);
-                    $("#CourseId").val(query.item.id);
-                }
-            });
-    });
-</script>*@
+  
 
 <h2>Create</h2>
 
 
-@using (Ajax.BeginForm("AddStudent", "Enrollment", new AjaxOptions
+@using (Ajax.BeginForm("AddStudent", "Enrollments", new AjaxOptions
 {
     HttpMethod="POST",
     OnSuccess="Added",
-    OnFailure="Failed"
+    OnFailure="Failure"
 }))
 {
     @Html.AntiForgeryToken()
@@ -75,26 +69,32 @@
 <div class="form-horizontal">
     <h4>Enrollment</h4>
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" }) 
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div id="failed" class="alert alert-danger" style="display: none;">
+        There was an error adding the Student to this course.
+    </div>
+    <div id="success" class="alert alert-success" style="display: none;">
+        Student added successfully
+    </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Course.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @*@Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })*@
-            @Html.EditorFor(model => model.CourseId, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })          
             @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.ParticipantId, "ParticipantId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model=>model.Participant.FirstName, new {htmlAttributes= new {@class = "form-control"}})
-            @Html.HiddenFor(model=> model.ParticipantId)
+            @Html.EditorFor(model => model.Participant.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.HiddenFor(model => model.ParticipantId)
             @Html.ValidationMessageFor(model => model.ParticipantId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Enroll Student" class="btn btn-success btn-block" />
         </div>
     </div>
 </div>
