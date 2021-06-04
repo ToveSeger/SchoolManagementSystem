@@ -63,7 +63,12 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Ajax.BeginForm("AddStudent", "Enrollment", new AjaxOptions
+{
+    HttpMethod="POST",
+    OnSuccess="Added",
+    OnFailure="Failed"
+}))
 {
     @Html.AntiForgeryToken()
     

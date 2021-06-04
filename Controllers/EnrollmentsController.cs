@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using SchoolManagementSystem.Models;
@@ -65,6 +66,25 @@ namespace SchoolManagementSystem.Controllers
             return View(enrollment);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> AddStudent ([Bind(Include = "CourseId,ParticipantId")] Enrollment enrollment)
+        {
+            try
+            {
+                var isEnrolled = db.Enrollment.Any(p => p.CourseId == enrollment.CourseId && p.ParticipantId == enrollment.ParticipantId);
+                if (ModelState.IsValid && !isEnrolled)
+                {
+                    db.Enrollment.Add(enrollment);
+                    await db.SaveChangesAsync();
+                    return Json(new {IsSuccess=true, Message="Student Added Successfully"}, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { IsSuccess = false, Message = "Student couldn't be added, maybe it's already enrolled?" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json(new { IsSuccess = false, Message = "Please Contact Your Administrator" }, JsonRequestBehavior.AllowGet);
+            }
+        }
         // GET: Enrollments/Edit/5
         public ActionResult Edit(int? id)
         {
