@@ -22,6 +22,14 @@ namespace SchoolManagementSystem.Controllers
             return View(enrollment.ToList());
         }
 
+        public PartialViewResult _enrollmentPartial(int? courseId)
+        {
+            var enrollments = db.Enrollment.Where(c=>c.CourseId == courseId)
+                .Include(e => e.Course)
+                .Include(e => e.Participant);
+            return PartialView(enrollments.ToList());
+        }
+
         // GET: Enrollments/Details/5
         public ActionResult Details(int? id)
         {

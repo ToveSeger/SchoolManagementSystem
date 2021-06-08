@@ -2,41 +2,83 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <script>
     $(function () {
-        $("#Participant_FirstName").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Enrollments/GetParticipants",
-                    dataType: "json",
-                    type: "POST",
-                    data: {
-                        term: request.term
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        $("#Participant_FirstName").val("");
-                        response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name, id: item.Id };
-                        }))
-                    }
-                });
-            },
-            minLength: 2,
-            select: function (event, query) {
-                console.log(query);
-                $("#ParticipantId").val(query.item.id);
-            }
+
+        function LoadEnrollments(cid) {
+            $.ajax({
+                url: '@Url.Action("_enrollmentPartial", "Enrollments")',
+                dataType: 'html',
+                contentType: 'application/html; charset=utf-8',
+                type: 'GET',
+                data: {
+                    courseid: cid
+                },
+                success: function (data) {
+                    $('#data').fadeOut().html(data).fadeIn();
+                }
+            });
+        }
+
+        var cid = $('#CourseId').val();
+        LoadEnrollments(cid);
+
+        $('#CourseId').change(function () {
+            var cid = $('#CourseId').val();
+            LoadEnrollments(cid);
+            $('#failed"').fadeOut('fast');
+            $('#success').fadeOut('fast');
         });
+
+
+            $("#Participant_FirstName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Enrollments/GetParticipants",
+                        dataType: "json",
+                        type: "POST",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            $("#Participant_FirstName").val("");
+                            response($.map(data, function (item) {
+                                return { label: item.Name, value: item.Name, id: item.Id };
+                            }))
+                        }
+                    });
+                },
+                minLength: 2,
+                select: function (event, query) {
+                    console.log(query);
+                    $("#ParticipantId").val(query.item.id);
+                }
+            });
     });
+
 
     function Added(res) {
         if (res.IsSuccess) {
             $(function () {
                 $("#failed").fadeOut('fast');
                 $("#success").fadeIn('fast');
+                var cid = $('#CourseId').val();
+                $.ajax({
+                    url: '@Url.Action("_enrollmentPartial", "Enrollments")',
+                    dataType: 'html',
+                    contentType: 'application/html; charset=utf-8',
+                    type: 'GET',
+                    data: {
+                        courseid: cid
+                    },
+                    success: function (data) {
+                        $('#data').fadeOut().html(data).fadeIn();
+                    }
+                });
             })
         }
         else {
@@ -44,11 +86,13 @@
         }
     }
 
-    function Failed(res) {     
+
+
+    function Failed(res) {
             $(function () {
                 $("#failed").fadeIn('fast');
                 $("#failed").fadeOut('fast');
-            })       
+            })
     }
 </script>
 
@@ -78,14 +122,14 @@
         Student added successfully
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Course.CourseId, "CourseId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <label for="CourseId" class = "control-label col-md-2" >Course</label>       
         <div class="col-md-10">
             @Html.DropDownList("CourseId", null, htmlAttributes: new { @class = "form-control" })          
             @Html.ValidationMessageFor(model => model.CourseId, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.ParticipantId, "ParticipantId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <label for="ParticipantId" class="control-label col-md-2">Participant</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Participant.FirstName, new { htmlAttributes = new { @class = "form-control" } })
             @Html.HiddenFor(model => model.ParticipantId)
@@ -99,11 +143,13 @@
     </div>
 </div>
 }
+<hr/>
+
+<div id="data">
+    
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
